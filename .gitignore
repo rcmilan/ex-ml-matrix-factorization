@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 # Data
 /App/Data/Amazon0302.txt
+
+# Model
+/App/Model/Amazon0302.zip

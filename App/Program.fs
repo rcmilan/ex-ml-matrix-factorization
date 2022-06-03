@@ -12,7 +12,14 @@ let InputUInt32 (text : string)=
     let v = Convert.ToUInt32(Console.ReadLine())
     v
 
+let persist (ctx : MLContext, modelPath : string, trainedModel : ITransformer, trainSet : IDataView)=
+    use fs = new FileStream(modelPath, FileMode.Create, FileAccess.Write, FileShare.Write)
+    ctx.Model.Save(trainedModel, trainSet.Schema, fs)
+
+    printfn "The model is saved to %s" modelPath
+
 let dataPath = Path.Combine(__SOURCE_DIRECTORY__, "Data\\Amazon0302.txt")
+let modelPath = Path.Combine(__SOURCE_DIRECTORY__, "Model\\Amazon0302.zip")
 
 // STEP 1: Cria o contexto para ser utilizado durante todo o processo
 let mlContext = new MLContext()
@@ -40,6 +47,8 @@ let est = mlContext.Recommendation().Trainers.MatrixFactorization(options)
 
 // STEP 5: Treina o model
 let model = est.Fit(trainData)
+
+persist(mlContext, modelPath, model, trainData)
 
 // STEP 6: faz a predição
 let productId = InputUInt32 "Digite o productId do 1º produto: "
