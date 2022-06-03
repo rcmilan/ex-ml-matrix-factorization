@@ -16,7 +16,7 @@ let persist (ctx : MLContext, modelPath : string, trainedModel : ITransformer, t
     use fs = new FileStream(modelPath, FileMode.Create, FileAccess.Write, FileShare.Write)
     ctx.Model.Save(trainedModel, trainSet.Schema, fs)
 
-    printfn "The model is saved to %s" modelPath
+    printfn "Model salvo em: %s" modelPath
 
 let dataPath = Path.Combine(__SOURCE_DIRECTORY__, "Data\\Amazon0302.txt")
 let modelPath = Path.Combine(__SOURCE_DIRECTORY__, "Model\\Amazon0302.zip")
